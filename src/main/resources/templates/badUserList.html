@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+
+
+  <th:block layout:fragment="css">
+    <style>
+        select{
+            margin-right:10px;
+        }
+    </style>
+  </th:block>
+
+
+
+  <form role="form" method="get" th:object="${boardDtoList}">
+    <table class="table">
+      <thead>
+      <tr>
+        <td>글 번호</td>
+        <td>유저명</td>
+        <td>신고 사유</td>
+        <td>등록일</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="badUser, index : ${badUserList}">
+        <td>
+          <span th:text="${index.index}"></span>
+        </td>
+        <td th:text="${badUser.user}"></td>
+        <td th:text="${badUser.content}"></td>
+        <td th:text="${#temporals.format(badUser.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+      </tr>
+      </tbody>
+    </table>
+
+
+
+
+  </form>
+  <a th:href="@{/baduserwrite}">
+    <input type="button" value="글 작성">
+  </a>
+
+
+
+</div>
+</body>
+</html>

@@ -12,9 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "member")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +42,8 @@ public class Member {
 
 
 
+
+
     public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
         member.setName((memberDto.getName()));
@@ -51,15 +54,6 @@ public class Member {
         return member;
     }
 
-    @Builder
-    public Member(Long id,String email,String username,String password,Role role){
-        this.id=id;
-        this.email=email;
-        this.name=name;
-        this.password=password;
-        this.role=role;
-
-    }
 
 
 

@@ -3,6 +3,7 @@ package com.example.board.service;
 import com.example.board.entity.Member;
 import com.example.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,11 +29,6 @@ public class MemberService implements UserDetailsService {
         if(findMember != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
-    }
-
-    public List<Member> findAll() {
-        List<Member> members = memberRepository.findAll();
-        return members;
     }
 
 

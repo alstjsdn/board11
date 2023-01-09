@@ -12,38 +12,53 @@
 
 
 
-    <table>
-        <thead>
-        <tr>
-            <th class="one wide">번호</th>
-            <th class="ten wide">글제목</th>
-            <th class="two wide">작성자</th>
-            <th class="three wide">작성일</th>
-        </tr>
-        </thead>
+    <th:block layout:fragment="css">
+        <style>
+        select{
+            margin-right:10px;
+        }
+    </style>
+    </th:block>
 
-        <tbody>
-        <!-- CONTENTS !-->
-        <tr th:each="board, index : ${boardList}">
-            <td>
-                <span th:text="${index.index}"></span>
-            </td>
-            <td>
-                <a th:href="@{'/list/' + ${board.id}}">
-                    <span th:text="${board.title}"></span>
-                </a>
-            </td>
-            <td>
-                <span th:text="${board.writer}"></span>
-            </td>
-            <td>
-                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/write}">글쓰기</a>
+
+
+        <form role="form" method="get" th:object="${boardDtoList}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>글 번호</td>
+                    <td>제목</td>
+                    <td>유저명</td>
+                    <td>등록일</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board, index : ${boardList}">
+                    <td>
+                        <span th:text="${index.index}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/list/' + ${board.id}}">
+                            <span th:text="${board.title}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${board.writer}"></td>
+                    <td th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+                </tr>
+
+                </tbody>
+            </table>
+
+
+
+        </form>
+    <a th:href="@{/write}">
+        <input type="button" value="글 작성">
+    </a>
+
+
+
 </div>
-
 </body>
 </html>

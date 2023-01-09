@@ -8,9 +8,9 @@
 </head>
 <body>
 <div layout:fragment="content">
-<form th:action="@{/write}" method="post">
-  제목 : <input type="text" name="title"> <br>
-  <textarea name="content"></textarea><br>
+<form th:action="@{/baduserwrite}" method="post">
+  신고 유저 : <input type="text" name="user"> <br>
+  신고 사유:<textarea name="content"></textarea><br>
   <input type="submit" value="등록">
 </form>
 </div>

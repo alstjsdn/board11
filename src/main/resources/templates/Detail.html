@@ -1,28 +1,105 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-<h2 th:text="${boardDto.title}"></h2>
-<p th:text="${boardDto.content}"></p>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 
-<!-- 수정 or 삭제 -->
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+        .mgb-15{
+            margin-bottom:15px;
+        }
+        .mgt-30{
+            margin-top:30px;
+        }
+        .mgt-50{
+            margin-top:50px;
+        }
+        .repImgDiv{
+            margin-right:15px;
+            height:auto;
+            width:50%;
+        }
+        .repImg{
+            width:100%;
+            height:400px;
+        }
+        .wd50{
+            height:auto;
+            width:50%;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content" style="margin-left:25%;margin-right:25%">
+
+
+  <div class="d-flex">
+
+    <div class="wd50">
+      <div class="h4" th:text="${boardDto.title}"></div>
+      <hr class="my-4">
+      <br>
+    </div>
+  </div>
+
+  <div class="jumbotron jumbotron-fluid mgt-30">
+    <div class="container">
+      <p class="lead" th:text="${boardDto.content}"></p>
+    </div>
+
+
+  </div>
+  <div>
+    <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+      <button>수정</button>
+    </a>
+    <form th:action="@{'/board/delete/'}" method="post">
+      <input type="hidden" name="id" th:value="${boardDto.id}" />
+      <button>삭제</button>
+    </form>
+  </div>
+
 <div>
-  <a th:href="@{'/board/edit/' + ${boardDto.id}}">
-    <button>수정</button>
-  </a>
-  <form th:action="@{'/board/delete/'}" method="post">
-    <input type="hidden" name="id" th:value="${boardDto.id}"/>
-    <button>삭제</button>
+  <span>댓글</span><br>
+  <form name="commentRegisterFrm" th:action="@{'/board/comment'}" method="post">
+    <input type="hidden" name="boardId" th:value="${boardDto.id}">
+    <textarea name="content" rows="3" cols="50" maxlength="255"></textarea><br>
+    <input type="submit" value="작성">
   </form>
 </div>
+<div>
+<form role="form" method="get" th:object="${boardDtoList}">
+  <table class="table">
+    <thead>
+    <tr>
+      <td>작성자</td>
+      <td>내용</td>
+      <td>등록일</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment, index : ${commentList}">
+      <td>
+        <span th:text="${comment.writer}"></span>
+      </td>
+      <td>
+        <span th:text="${comment.content}"></span>
+      </td>
+      <td>
+        <span th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
 
 
-<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-</script>
 
-</body>
+</form>
+</div>
+</div>
+</div>
+
 </html>
