@@ -50,6 +50,27 @@
                 </tbody>
             </table>
 
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${pageResult.hasPrevious ? '' : 'disabled'}">
+                        <a class="page-link" th:href="@{/board(page=${pageable.pageNumber-1})}">이전</a>
+                    </li>
+                    <th:block th:each="number : ${#numbers.sequence(1, pageResult.totalPages)}">
+                        <li class="page-item" th:classappend="${pageable.pageNumber+1 == number ? 'active' : ''}">
+                            <th:block th:if="${pageable.pageNumber+1 == number}">
+                                <span class="page-link">[(${number})]</span>
+                            </th:block>
+                            <th:block th:unless="${pageable.pageNumber+1 == number}">
+                                <a class="page-link" th:href="@{/board(page=${number}-1)}">[(${number})]</a>
+                            </th:block>
+                        </li>
+                    </th:block>
+                    <li class="page-item" th:classappend="${pageResult.hasNext ? '' : 'disabled'}">
+                        <a class="page-link" th:href="@{/board(page=${pageable.pageNumber+1})}">다음</a>
+                    </li>
+                </ul>
+            </nav>
+
 
 
         </form>

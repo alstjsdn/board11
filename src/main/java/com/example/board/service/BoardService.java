@@ -5,6 +5,7 @@ import com.example.board.entity.Board;
 import com.example.board.entity.Member;
 import com.example.board.repository.BoardRepository;
 import com.example.board.repository.MemberRepository;
+import com.example.board.result.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,11 +26,11 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
-    public List<BoardDto> setBoarderList() {
-        List<Board> boards = boardRepository.findAllByOrderByIdDesc();
+    public PageResult<BoardDto> setBoarderList(Pageable pageable) {
+        Page<Board> page = boardRepository.findAllByOrderByIdDesc(pageable);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
-        for (Board board : boards) {
+        for (Board board : page.getContent()) {
             BoardDto boardDto = BoardDto.builder()
                     .id(board.getId())
                     .title(board.getTitle())
@@ -42,7 +43,7 @@ public class BoardService {
 
 
         }
-        return boardDtoList;
+        return new PageResult<>(page,boardDtoList);
     }
 
 

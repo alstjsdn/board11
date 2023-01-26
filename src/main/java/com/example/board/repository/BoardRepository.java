@@ -12,6 +12,6 @@ import java.util.List;
 @EnableJpaAuditing
 public interface BoardRepository extends JpaRepository<Board,Long> {
     List<Board> findByWriterOrderByWriterDesc(String writer);
-    List<Board> findAllByOrderByIdDesc();
+    Page<Board> findAllByOrderByIdDesc(Pageable pageable);
 
 }

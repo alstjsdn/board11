@@ -2,9 +2,11 @@ package com.example.board.controller;
 
 import com.example.board.dto.BoardDto;
 import com.example.board.dto.CommentDto;
+import com.example.board.result.PageResult;
 import com.example.board.service.BoardService;
 import com.example.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -24,9 +26,11 @@ public class BoardController{
 
 
     @GetMapping(value = "/board")
-    public String List(Model model) {
-        List<BoardDto> boardDtoList = boardService.setBoarderList();
-        model.addAttribute("boardList",boardDtoList);
+    public String List(Model model,@PageableDefault(page = 0,size = 5) Pageable pageable) {
+        PageResult<BoardDto> pageResult = boardService.setBoarderList(pageable);
+        model.addAttribute("pageable",pageable);
+        model.addAttribute("boardList",pageResult.getContent());
+        model.addAttribute("pageResult",pageResult);
 
         return "List.html";
     }
